@@ -6,6 +6,7 @@ class Game{
     private ArrayList<String> letters = new ArrayList<>();
     private ArrayList<String> allLetters = new ArrayList<>();
     private int health = 8;
+    public static final int MIN_HEALTH = 0;
 
     public void generateWord(){
         ArrayList<String> test = new ArrayList<>();
@@ -20,13 +21,12 @@ class Game{
 
     public void printWord(){
         int num = 0;
-        for(int i = 0;i<secretWord.size();i++){
-            if(this.letters.contains(secretWord.get(i))){
-                System.out.print(secretWord.get(i));
-            }
-            else{
+        for (String s : secretWord) {
+            if (this.letters.contains(s)) {
+                System.out.print(s);
+            } else {
                 System.out.print("-");
-                num+=1;
+                num += 1;
             }
         }
         if(num==0){
@@ -64,9 +64,9 @@ public class Hangman {
         Game person = new Game();
         person.generateWord();
         Scanner input = new Scanner(System.in);
-        menu(input);
+        menu();
         while (true) {
-            if(person.getHealth() == 0){
+            if(person.getHealth() == Game.MIN_HEALTH){
                 System.exit(0);
             }
             person.printWord();
@@ -76,7 +76,8 @@ public class Hangman {
                 print("You should input a single letter.");
                 continue;
             }
-            if(!alfabet.contains(letter)){
+
+            else if (!alfabet.contains(letter)){
                 print("Please enter a lowercase English letter.");
                 continue;
             }
@@ -88,10 +89,12 @@ public class Hangman {
     public static void print(String element){
         System.out.println(element);
     }
-    public static void menu(Scanner input){
+
+    public static void menu(){
         while(true){
+            Scanner inp = new Scanner(System.in);
             print("Type \"play\" to play the game, \"exit\" to quit:");
-            String text = input.next();
+            String text = inp.next();
             if(Objects.equals(text, "play")){
                 break;
             }
